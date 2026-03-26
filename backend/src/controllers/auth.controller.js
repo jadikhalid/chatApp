@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../lib/utils.js";
+import cloudinary from "../lib/cloudinary.js";
 
 export const signup = async (req, res) => {
   const { email, fullName, password } = req.body;
@@ -99,6 +100,61 @@ export const signout = (req, res) => {
   } catch (error) {
     console.log("Error in signOut controller :", error.message);
     res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  const { fullName, profilePic } = req.body;
+  try {
+    const userId = req.user._id;
+
+    if (!profilePic) {
+      return res.status(400).json({
+        error: "Profile picture is required",
+      });
+    }
+
+    const uploadResponse = await cloudinary.uploader.upload(profilePic);
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        fullName,
+        profilePic: uploadResponse.secure_url,
+      },
+      { new: true },
+    ).select("-password");
+
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      _id: updatedUser._id,
+      email: updatedUser.email,
+      fullName: updatedUser.fullName,
+      profilePic: updatedUser.profilePic,
+      createdAt: updatedUser.createdAt,
+    });
+  } catch (error) {
+    console.log("Error in updateProfile controller :", error.message);
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+export const chekAuth = (req, res) => {
+  try {
+    return res.status(200).json({
+      message: "User is authenticated 000",
+      _id: req.user._id,
+      email: req.user.email,
+      fullName: req.user.fullName,
+      profilePic: req.user.profilePic,
+      createdAt: req.user.createdAt,
+    });
+  } catch (error) {
+    console.log("Error in checkAuth controller :", error.message);
+    return res.status(500).json({
       error: error.message,
     });
   }
