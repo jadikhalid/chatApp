@@ -8,13 +8,14 @@ import SettingsPage from "./pages/SettingsPage.jsx";
 import ProfilePage from "./pages/profilePage.jsx";
 import { useAuthStore } from "./store/useAuthStore.js";
 import { Loader } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const { authUser, chekAuth, isCheckingAuth } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
-    chekAuth();
-  }, [chekAuth]);
+    checkAuth();
+  }, [checkAuth]);
 
   console.log("Auth User:", authUser);
 
@@ -47,6 +48,8 @@ const App = () => {
           element={authUser ? <ProfilePage /> : <LoginPage />}
         />
       </Routes>
+
+      <Toaster />
     </div>
   );
 };
