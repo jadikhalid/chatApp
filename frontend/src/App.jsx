@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import Navbar from "./componets/Navbar.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
@@ -30,10 +30,13 @@ const App = () => {
     <div>
       <Navbar />
       <Routes>
-        <Route path="/" element={authUser ? <HomePage /> : <LoginPage />} />
+        <Route
+          path="/"
+          element={authUser ? <HomePage /> : <Navigate to="/login" />}
+        />
         <Route
           path="/signup"
-          element={!authUser ? <SignUpPage /> : <Navigate />}
+          element={!authUser ? <SignUpPage /> : <Navigate to="/" />}
         />
         <Route
           path="/login"
@@ -41,11 +44,11 @@ const App = () => {
         />
         <Route
           path="/settings"
-          element={authUser ? <SettingsPage /> : <LoginPage />}
+          element={authUser ? <SettingsPage /> : <Navigate to="/login" />}
         />
         <Route
           path="/profile"
-          element={authUser ? <ProfilePage /> : <LoginPage />}
+          element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
         />
       </Routes>
 
