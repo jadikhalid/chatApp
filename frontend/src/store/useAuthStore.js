@@ -14,7 +14,6 @@ export const useAuthStore = create((set) => ({
     try {
       const res = await axiosInstance.get("/auth/check");
       // Vérifie si ton backend renvoie res.data ou res.data.user
-      // Si signUp utilise res.data, checkAuth devrait probablement faire de même
       set({ authUser: res.data, isCheckingAuth: false });
     } catch (error) {
       console.log("Error checking auth:", error);
@@ -36,6 +35,19 @@ export const useAuthStore = create((set) => ({
     }
   },
 
+  login: async (data) => {
+    set({ isLoggingIn: true });
+    try {
+      const res = await axiosInstance.post("/auth/login", data);
+      set({ authUser: res.data });
+      toast.success("LoggedIn successfully");
+    } catch (error) {
+      toast.error(`Login failed: ${error.response.data.message}`);
+    } finally {
+      set({ isLoggingIn: false });
+    }
+  },
+
   logout: async () => {
     try {
       await axiosInstance.post("/auth/signout");
@@ -46,4 +58,6 @@ export const useAuthStore = create((set) => ({
       console.log(error);
     }
   },
+
+  updateProfile: async (data) => {},
 }));

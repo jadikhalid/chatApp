@@ -64,6 +64,7 @@ export const signin = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         error: "Invalides credentials",
+        message: "Email inexistant !",
       });
     }
 
@@ -81,6 +82,7 @@ export const signin = async (req, res) => {
     } else {
       return res.status(400).json({
         error: "Invalides credentials",
+        message: "Password erroné !",
       });
     }
   } catch (error) {
