@@ -12,7 +12,7 @@ router.post("/login", signin);
 
 router.post("/signout", signout);
 
-router.put("/update-profile", protectRoute, updateProfile);
+router.post("/update-profile", protectRoute, updateProfile);
 
 router.get("/check", protectRoute, chekAuth);
 
