@@ -1,5 +1,9 @@
 # ✨ Full Stack Realtime Chat App ✨
 
+A modern Full-Stack Realtime Chat App built with the MERN stack. 🚀
+
+Features Socket.io for instant messaging and online status, JWT for secure authentication, and Zustand for seamless state management. Styled with TailwindCSS and DaisyUI for a sleek, responsive UI. Production-ready with comprehensive error handling. ✨
+
 ![Demo App](/frontend/public/screenshot-for-readme.png)
 
 Highlights:
