@@ -25,9 +25,11 @@ export const useChatStore = create((set, get) => ({
     set({ isMessagesLoading: true });
     try {
       const res = await axiosInstance.get(`/message/${userId}`);
-      set({ messages: res.data });
+      // S'assurer que res.data est un tableau, sinon utiliser un tableau vide
+      set({ messages: Array.isArray(res.data) ? res.data : [] });
     } catch (error) {
       toast.error(error.response.data.message);
+      set({ messages: [] }); // En cas d'erreur, réinitialiser les messages à un tableau vide
     } finally {
       set({ isMessagesLoading: false });
     }
@@ -48,5 +50,9 @@ export const useChatStore = create((set, get) => ({
 
   setSelectedUser: (selectedUser) => {
     set({ selectedUser });
+  },
+
+  clearMessages: () => {
+    set({ messages: [] });
   },
 }));

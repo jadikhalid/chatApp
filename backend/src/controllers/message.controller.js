@@ -30,9 +30,7 @@ export const getMessages = async (req, res) => {
         { senderId: userToChatId, receiverId: senderId },
       ],
     });
-    res.status(200).json({
-      messages,
-    });
+    res.status(200).json(messages);
   } catch (error) {
     console.log("Error in getMessages controller :", error.message);
     res.status(500).json({
@@ -60,9 +58,7 @@ export const sendMessage = async (req, res) => {
       text,
       image: imageUrl,
     });
-    res.status(200).json({
-      message: newMessage,
-    });
+    res.status(200).json(newMessage);
   } catch (error) {
     console.log("Error in sendMessage controller :", error.message);
     res.status(500).json({
